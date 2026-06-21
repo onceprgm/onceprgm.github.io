@@ -32,6 +32,9 @@ function tick() {
 setInterval(tick, 1000);
 tick();
 
+const year = document.getElementById("year");
+if (year) year.textContent = new Date().getFullYear();
+
 (function cursor() {
   const c = document.querySelector(".cursor");
   if (!c || window.matchMedia("(hover: none)").matches) return;
