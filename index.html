@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>onceprgm – systems developer</title>
+    <meta name="description" content="Systems & Linux developer. Go · Python · C++." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- ambient background (stars / dust / shooting stars) -->
+    <canvas class="bg-fx" aria-hidden="true"></canvas>
+
+    <!-- film grain + vignette overlay -->
+    <div class="grain" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <!-- cinematic letterbox bars -->
+    <div class="letterbox letterbox--top" aria-hidden="true"></div>
+    <div class="letterbox letterbox--bottom" aria-hidden="true"></div>
+
+    <!-- custom cursor -->
+    <div class="cursor" aria-hidden="true">
+      <div class="cursor__dot"></div>
+      <div class="cursor__ring"></div>
+    </div>
+
+    <!-- preloader -->
+    <div class="preloader" id="preloader">
+      <div class="preloader__inner">
+        <div class="preloader__label">LOADING REEL</div>
+        <div class="preloader__counter">
+          <span id="counter">0</span><span class="preloader__pct">%</span>
+        </div>
+        <div class="preloader__bar"><span id="loadBar"></span></div>
+      </div>
+    </div>
+
+    <!-- scroll progress -->
+    <div class="scroll-progress" aria-hidden="true"><span id="scrollBar"></span></div>
+
+    <!-- nav -->
+    <header class="nav">
+      <a href="#hero" class="nav__brand" data-cursor="hover">onceprgm<span>©</span></a>
+      <nav class="nav__links">
+        <a href="#about" data-cursor="hover">01 / about</a>
+        <a href="#work" data-cursor="hover">02 / work</a>
+        <a href="#contact" data-cursor="hover">03 / contact</a>
+      </nav>
+      <div class="nav__time">
+        <span id="clock">--:--:--</span> <span class="nav__loc">LINUX</span>
+      </div>
+    </header>
+
+    <main id="scroll-content">
+      <!-- hero -->
+      <section class="hero" id="hero">
+        <div class="hero__top">
+          <div class="hero__meta">
+            <span class="line">SYSTEMS · LINUX</span>
+            <span class="line">EST. <span class="dim">2026</span></span>
+          </div>
+          <div class="hero__meta hero__meta--right">
+            <span class="line">GO / PYTHON / C++</span>
+            <span class="line dim">REEL 001</span>
+          </div>
+        </div>
+
+        <h1 class="hero__title">
+          <span class="hero__line" data-split>building</span>
+          <span class="hero__line hero__line--outline" data-split>systems</span>
+          <span class="hero__line" data-split>that&nbsp;last</span>
+        </h1>
+
+        <div class="hero__footer">
+          <p class="hero__tag" data-reveal>
+            A personal reel by a systems &amp; Linux developer – Go, Python, C++ and the web. Scroll
+            to play.
+          </p>
+          <div class="hero__scroll" data-cursor="hover">
+            <span>SCROLL</span>
+            <div class="hero__scroll-line"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- marquee -->
+      <section class="marquee" aria-hidden="true">
+        <div class="marquee__track" id="marquee">
+          <span
+            >SYSTEMS PROGRAMMING ✶ LINUX ✶ GO ✶ PYTHON ✶ C++ ✶ LOW-LEVEL ✶ OPEN SOURCE ✶&nbsp;</span
+          >
+          <span
+            >SYSTEMS PROGRAMMING ✶ LINUX ✶ GO ✶ PYTHON ✶ C++ ✶ LOW-LEVEL ✶ OPEN SOURCE ✶&nbsp;</span
+          >
+        </div>
+      </section>
+
+      <!-- about -->
+      <section class="about" id="about">
+        <div class="section-head">
+          <span class="section-head__no">01</span>
+          <span class="section-head__title">ABOUT</span>
+        </div>
+        <div class="about__grid">
+          <p class="about__big" data-reveal-words>
+            I just love to program – thinking an idea through, then taking it apart: chasing down
+            bugs and edge cases until the thing finally clicks.
+          </p>
+          <div class="about__col">
+            <p data-reveal>
+              Systems and Linux developer working across <strong>Go</strong>,
+              <strong>Python</strong>, <strong>C++</strong> and the <strong>web</strong>. For me the
+              process is the point – shaping the idea, debugging, and the small wins along the way.
+            </p>
+            <ul class="about__stack" data-reveal>
+              <li><span>LANG</span> Go · Python · C++ · Web</li>
+              <li><span>OS</span> Linux · POSIX</li>
+              <li><span>FOCUS</span> systems · tooling · CLI · bots · web</li>
+              <li><span>STATUS</span> open to collaboration</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- work -->
+      <section class="work" id="work">
+        <div class="section-head">
+          <span class="section-head__no">02</span>
+          <span class="section-head__title">SELECTED WORK</span>
+        </div>
+
+        <div class="work__list">
+          <a
+            class="project"
+            href="https://github.com/onceprgm/cme"
+            target="_blank"
+            rel="noopener"
+            data-cursor="view"
+            data-reveal
+          >
+            <span class="project__index">001</span>
+            <span class="project__name">cme</span>
+            <span class="project__tags">Go · Linux CLI · Minecraft launcher</span>
+            <span class="project__year">2026</span>
+          </a>
+          <a
+            class="project"
+            href="https://github.com/onceprgm/kdemine"
+            target="_blank"
+            rel="noopener"
+            data-cursor="view"
+            data-reveal
+          >
+            <span class="project__index">002</span>
+            <span class="project__name">kdemine</span>
+            <span class="project__tags">C++ · QML · KDE Plasma · minesweeper</span>
+            <span class="project__year">2026</span>
+          </a>
+          <a
+            class="project"
+            href="https://github.com/onceprgm/shorter-links"
+            target="_blank"
+            rel="noopener"
+            data-cursor="view"
+            data-reveal
+          >
+            <span class="project__index">003</span>
+            <span class="project__name">shorter-links</span>
+            <span class="project__tags">Python · aiogram · URL shortener</span>
+            <span class="project__year">2026</span>
+          </a>
+          <a
+            class="project"
+            href="https://github.com/onceprgm/fishing-game"
+            target="_blank"
+            rel="noopener"
+            data-cursor="view"
+            data-reveal
+          >
+            <span class="project__index">004</span>
+            <span class="project__name">fishing-game</span>
+            <span class="project__tags">Python · aiogram · Telegram idle game</span>
+            <span class="project__year">2026</span>
+          </a>
+          <a class="project" href="#hero" data-cursor="view" data-reveal>
+            <span class="project__index">005</span>
+            <span class="project__name">this site</span>
+            <span class="project__tags">HTML · CSS · GSAP · you are here</span>
+            <span class="project__year">2026</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- contact -->
+      <section class="contact" id="contact">
+        <div class="section-head">
+          <span class="section-head__no">03</span>
+          <span class="section-head__title">CONTACT</span>
+        </div>
+
+        <h2 class="contact__cta" data-split-lines>
+          <span data-split>let&apos;s build</span>
+          <span data-split>something.</span>
+        </h2>
+
+        <div class="contact__links">
+          <a href="https://t.me/dotbuilds" target="_blank" rel="noopener" data-cursor="hover">
+            <span class="contact__k">Telegram</span><span class="contact__v">@dotbuilds</span>
+          </a>
+          <a href="https://t.me/dottickets" target="_blank" rel="noopener" data-cursor="hover">
+            <span class="contact__k">Tickets</span
+            ><span class="contact__v">open in telegram →</span>
+          </a>
+          <a href="https://github.com/onceprgm" target="_blank" rel="noopener" data-cursor="hover">
+            <span class="contact__k">GitHub</span><span class="contact__v">@onceprgm</span>
+          </a>
+        </div>
+
+        <footer class="footer">
+          <span>© 2026 onceprgm</span>
+          <span>END OF REEL</span>
+          <span>MADE ON LINUX</span>
+        </footer>
+      </section>
+    </main>
+
+    <!-- libraries (cdn) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="js/background.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
