@@ -99,7 +99,12 @@
     }
     shooters = shooters.filter((s) => s.life > 0);
 
-    requestAnimationFrame(frame);
+    rafId = requestAnimationFrame(frame);
   }
-  requestAnimationFrame(frame);
+  let rafId = requestAnimationFrame(frame);
+
+  document.addEventListener("visibilitychange", () => {
+    cancelAnimationFrame(rafId);
+    if (!document.hidden) rafId = requestAnimationFrame(frame);
+  });
 })();
