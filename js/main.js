@@ -1,9 +1,27 @@
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const hasGsap = typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined";
+const hasLenis = typeof Lenis !== "undefined";
 
-gsap.registerPlugin(ScrollTrigger);
+function revealStatic() {
+  const pre = document.getElementById("preloader");
+  if (pre) pre.style.display = "none";
+  document.querySelectorAll(".letterbox").forEach((l) => (l.style.transform = "scaleY(1)"));
+  document
+    .querySelectorAll(
+      ".hero__meta, .hero__footer, .nav, [data-split], [data-reveal], [data-reveal-words]",
+    )
+    .forEach((el) => {
+      el.style.opacity = "1";
+      el.style.visibility = "visible";
+      el.style.transform = "none";
+    });
+  document.body.style.cursor = "auto";
+}
+
+if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 
 let lenis;
-if (!reduceMotion) {
+if (hasGsap && hasLenis && !reduceMotion) {
   lenis = new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
   lenis.on("scroll", ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
@@ -35,36 +53,40 @@ tick();
 const year = document.getElementById("year");
 if (year) year.textContent = new Date().getFullYear();
 
-(function cursor() {
-  const c = document.querySelector(".cursor");
-  if (!c || window.matchMedia("(hover: none)").matches) return;
-  const dot = c.querySelector(".cursor__dot");
-  const ring = c.querySelector(".cursor__ring");
-  let mx = innerWidth / 2,
-    my = innerHeight / 2,
-    rx = mx,
-    ry = my;
+if (hasGsap) {
+  (function cursor() {
+    const c = document.querySelector(".cursor");
+    if (!c || window.matchMedia("(hover: none)").matches) return;
+    const dot = c.querySelector(".cursor__dot");
+    const ring = c.querySelector(".cursor__ring");
+    let mx = innerWidth / 2,
+      my = innerHeight / 2,
+      rx = mx,
+      ry = my;
 
-  window.addEventListener("mousemove", (e) => {
-    mx = e.clientX;
-    my = e.clientY;
-  });
-  gsap.ticker.add(() => {
-    // ring trails the dot with a bit of lag
-    rx += (mx - rx) * 0.18;
-    ry += (my - ry) * 0.18;
-    dot.style.left = mx + "px";
-    dot.style.top = my + "px";
-    ring.style.left = rx + "px";
-    ring.style.top = ry + "px";
-  });
+    window.addEventListener("mousemove", (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+    });
+    gsap.ticker.add(() => {
+      // ring trails the dot with a bit of lag
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      dot.style.left = mx + "px";
+      dot.style.top = my + "px";
+      ring.style.left = rx + "px";
+      ring.style.top = ry + "px";
+    });
 
-  document.querySelectorAll("[data-cursor]").forEach((el) => {
-    const mode = el.getAttribute("data-cursor");
-    el.addEventListener("mouseenter", () => c.classList.add(`cursor--${mode}`));
-    el.addEventListener("mouseleave", () => c.classList.remove(`cursor--${mode}`));
-  });
-})();
+    document.querySelectorAll("[data-cursor]").forEach((el) => {
+      const mode = el.getAttribute("data-cursor");
+      el.addEventListener("mouseenter", () => c.classList.add(`cursor--${mode}`));
+      el.addEventListener("mouseleave", () => c.classList.remove(`cursor--${mode}`));
+    });
+  })();
+} else {
+  document.body.style.cursor = "auto";
+}
 
 function runPreloader() {
   return new Promise((resolve) => {
@@ -212,24 +234,23 @@ function scrollScenes() {
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
-  if (lenis) lenis.stop();
-
-  if (reduceMotion) {
-    document.getElementById("preloader").style.display = "none";
-    gsap.set(".letterbox", { scaleY: 1 });
-    gsap.set([".hero__meta", ".hero__footer", ".nav"], { autoAlpha: 1 });
-    document
-      .querySelectorAll("[data-split], [data-reveal], [data-reveal-words]")
-      .forEach((el) => (el.style.opacity = 1));
+  if (reduceMotion || !hasGsap) {
+    revealStatic();
     return;
   }
 
-  prepareIntro();
-  await runPreloader();
-  if (lenis) lenis.start();
-  playIntro();
-  scrollScenes();
-  ScrollTrigger.refresh();
+  try {
+    if (lenis) lenis.stop();
+    prepareIntro();
+    await runPreloader();
+    if (lenis) lenis.start();
+    playIntro();
+    scrollScenes();
+    ScrollTrigger.refresh();
+  } catch (err) {
+    console.error("[intro] failed, showing content statically:", err);
+    revealStatic();
+  }
 });
 
 document.querySelectorAll('a[href^="#"]').forEach((a) => {
